@@ -145,15 +145,15 @@
                     <div class="col-md-3 col-sx-10 p-2">
                         <a href="{{ url_for('videoPage', id='') }}{{ row[0] }}">
                             <div class="card">
-                                <video src="{{ url_for('static', filename='videos/') }}{{ row[3] }}" alt="image" height="174">
+                                <video src="{{ url_for('static', filename='videos/') }}{{ row[5] }}" alt="image" height="174">
                                 </video>
                                 <div class="row">
                                     <div class="col-10 mt-3">
                                         <p class="mb-2" title="{{ row[1] }}">
-                                            {{ row[1] }}
+                                            {{ row[3] }}
                                         </p>
                                         <p style="color:#606060;">
-                                            {{ row[4] }}<br>{{ row[5] }}
+                                            {{ row[4] }}<br>{{ row[6] }}
                                         </p>
                                     </div>
 

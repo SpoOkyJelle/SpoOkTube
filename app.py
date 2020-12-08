@@ -22,6 +22,27 @@ def hello():
     return render_template('homepage.html', data=data)
 
 
+@app.route("/channel/<channel>")
+def channel(channel):
+    conn = mysql.connect()
+    cursor = conn.cursor()
+
+    query = "SELECT * from `channels` WHERE `channel_name` = %s"
+    cursor.execute(query, (channel,))
+    
+    data = cursor.fetchall()
+    
+    id = 0
+    for row in data:
+        id = row[0]
+    
+    videoquery = "SELECT * from `videos` WHERE `channel_id` = %s"
+    cursor.execute(videoquery, (id,))
+
+    videos = cursor.fetchall()
+    return render_template('channel.html', data=data, videos = videos)
+
+
 @app.route("/search", methods = ['POST' ])
 def search():
     conn = mysql.connect()
@@ -44,9 +65,24 @@ def videoPage(id):
 
     query = "SELECT * from `videos` WHERE `id` = %s"
     cursor.execute(query, (id,))
-
+    
     data = cursor.fetchall()
-    return render_template('videopage.html', data=data)
+    
+    channelid=0
+    videoid=0
+    for video in data:
+        channelid = video[1]
+        videoid=video[0]
+        
+    channelquery = "SELECT * from `channels` WHERE `id` = %s"
+    cursor.execute(channelquery, (channelid,))
+    channel = cursor.fetchall()
+    
+    
+    viewcount = "UPDATE `videos` SET `video_views` = `video_views` + 1 WHERE `id` = %s"
+    cursor.execute(viewcount, (videoid,))
+
+    return render_template('videopage.html', data=data, channel=channel)
 
 
 @app.route("/login", methods=['GET', 'POST'])
