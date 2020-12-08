@@ -43,11 +43,11 @@
         </div>
         <div class="feature-icons">
             <i class="material-icons">video_call</i>
-            <i class="material-icons">apps</i>
+            <!-- <i class="material-icons">apps</i>
             <i class="material-icons">message</i>
             <i class="material-icons">notifications</i>
             <span class="bell-icon-badge">9+</span>
-            <i class="material-icons account-icon">account_circle</i>
+            <i class="material-icons account-icon">account_circle</i> -->
         </div>
     </nav>
     {% endblock %}
@@ -200,7 +200,7 @@
                         <div class="card">
                             <div class="row">
                                 <div class="col-md-3">
-                                    <video src="{{ url_for('static', filename='videos/') }}{{ row[3] }}" alt="image" height="174">
+                                    <video src="{{ url_for('static', filename='videos/') }}{{ row[5] }}" alt="image" height="174">
                                     </video>
                                 </div>
                                 <div class="col-md-7 p-0 pt-2">
@@ -209,12 +209,12 @@
                                             <img id="img" width="48" src="https://yt3.ggpht.com/a-/AOh14GinKFFtcXMMwrPfhFbie8tgLV0vMzfvVFSMlw=s68-c-k-c0x00ffffff-no-rj-mo" class="rounded-circle">
                                         </div>
                                         <div class="col-10">
-                                            <p class="mb-1 title">{{ row[1] }}</p>
+                                            <p class="mb-1 title">{{ row[2] }}</p>
                                             <p class="subtitle">
-                                                {{ row[4] }} • {{ row[5] }}
+                                                • {{ row[6] }}
                                             </p>
                                             <div class="short_description">
-                                                {{ row[2] }}
+                                                {{ row[3] }}
                                             </div>
                                         </div>
                                     </div>

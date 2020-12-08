@@ -35,11 +35,11 @@
         </div>
         <div class="feature-icons">
             <i class="material-icons">video_call</i>
-            <i class="material-icons">apps</i>
+            <!-- <i class="material-icons">apps</i>
             <i class="material-icons">message</i>
             <i class="material-icons">notifications</i>
             <span class="bell-icon-badge">9+</span>
-            <i class="material-icons account-icon">account_circle</i>
+            <i class="material-icons account-icon">account_circle</i> -->
         </div>
     </nav>
     <main>
@@ -88,7 +88,9 @@
 
             <section class="channel-info">
                 <div class="avatar">
-                    <img src="{{ info[3] }}" alt="">
+                    <a href="{{ url_for('channel', channel='') }}{{ info[1] }}">
+                        <img src="{{ info[3] }}" alt="">
+                    </a>
                 </div>
                 <div class="description">
                     <h2>{{ info[1] }}</h2>

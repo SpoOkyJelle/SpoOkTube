@@ -16,7 +16,7 @@ def hello():
     conn = mysql.connect()
     cursor = conn.cursor()
 
-    cursor.execute("SELECT * from `videos`")
+    cursor.execute("SELECT * FROM `videos` INNER JOIN `channels` ON `videos`.`channel_id` = `channels`.`id`")
     data = cursor.fetchall()
 
     return render_template('homepage.html', data=data)
@@ -51,8 +51,8 @@ def search():
     query = request.form['search']
     searchString = '%' + query + '%'
 
-    sql = "SELECT * FROM `videos` where video_title LIKE %s OR video_desc LIKE %s OR video_url LIKE %s OR video_creator LIKE %s"
-    cursor.execute(sql, (searchString, searchString, searchString, searchString,))
+    sql = "SELECT * FROM `videos` where video_title LIKE %s OR video_desc LIKE %s OR video_url LIKE %s"
+    cursor.execute(sql, (searchString, searchString, searchString,))
 
     data = cursor.fetchall()
     return render_template('searchpage.html', data=data)
