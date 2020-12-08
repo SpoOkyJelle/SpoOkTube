@@ -1,7 +1,11 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, flash, render_template, request, redirect, url_for, session
 from flaskext.mysql import MySQL
+from datetime import time, timedelta
+from passlib.hash import sha256_crypt
 
 app = Flask(__name__)
+app.secret_key = "youtubeclone"
+app.permanent_session_lifetime = timedelta(days=5)
 
 mysql = MySQL()
 app.config['MYSQL_DATABASE_USER'] = 'root'
@@ -11,8 +15,17 @@ app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
 
 
+# [ ] rework css
+# [ ] add dark theme
+# [ ] make dark theme toggelable
+# [x] login
+# [x] login bad password
+# [ ] account view (logout and stuff)
+# [ ] video upload
+
+
 @app.route("/")
-def hello():
+def home():
     conn = mysql.connect()
     cursor = conn.cursor()
 
@@ -78,7 +91,6 @@ def videoPage(id):
     cursor.execute(channelquery, (channelid,))
     channel = cursor.fetchall()
     
-    
     viewcount = "UPDATE `videos` SET `video_views` = `video_views` + 1 WHERE `id` = %s"
     cursor.execute(viewcount, (videoid,))
 
@@ -88,12 +100,34 @@ def videoPage(id):
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     if request.method == "POST":
-        user = request.form["nm"]
-        return redirect(url_for("user", usr=user))
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        session.permanent = True
+
+        channelname = request.form['channel_name']
+        channelpass = request.form['channel_pass']
+
+        channelquery = "SELECT * from `channels` WHERE `channel_name` = %s"
+        cursor.execute(channelquery, (channelname,))
+        databasepass = cursor.fetchall()
+        
+        if sha256_crypt.verify(channelpass, databasepass[0][2]):
+            session["user"] = channelname
+            return redirect(url_for('channel', channel=channelname))
+        else:
+            flash('wrong password')
+            return redirect(url_for('login'))
     else:
+        if "user" in session:
+            return redirect(url_for('channel', channel=channelname))
+        
         return render_template('login.html')
 
-    return render_template('login.html')
+
+@app.route("/logout")
+def logout():
+    session.pop("user", None)
+    return redirect(url_for('login'))
 
 
 if __name__ == "__main__":

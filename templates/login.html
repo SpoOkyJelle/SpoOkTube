@@ -134,9 +134,17 @@
     <div class="row main_container">
         <div class="col-md-2"></div>
         <div class="col-md-10">
-            <form action="">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for msg in messages %}
+                        <p>{{ msg }}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <form action="#" method="post">
                 <p>Name:</p>
-                <input type="text" name="nm">
+                <input type="text" name="channel_name">
+                <input type="text" name="channel_pass">
                 <input type="submit">
             </form>
         </div>
