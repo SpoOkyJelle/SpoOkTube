@@ -36,14 +36,14 @@ def channel(channel):
     for row in data:
         id = row[0]
     
-    videoquery = "SELECT * from `videos` WHERE `channel_id` = %s"
+    videoquery = "SELECT * from `videos` WHERE `channel_id` = %s ORDER BY `created_at` DESC"
     cursor.execute(videoquery, (id,))
 
     videos = cursor.fetchall()
     return render_template('channel.html', data=data, videos = videos)
 
 
-@app.route("/search", methods = ['POST' ])
+@app.route("/search", methods = ['POST'])
 def search():
     conn = mysql.connect()
     cursor = conn.cursor()
