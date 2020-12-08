@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+{% for row in data %}
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>
+        {{ row[1] }}
+    </title>
+    <link rel="icon" href="https://s.ytimg.com/yts/img/favicon_32-vflOogEID.png" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/style.css') }}" />
+</head>
+
+<body>
+    <nav class="nav">
+        <div class="menu">
+            <i class="material-icons">menu</i>
+            <a href="/">
+                <img class="youlogo" src="{{ url_for('static',filename='images/youlogo.png') }}" />
+            </a>
+        </div>
+        <div class="searchbar">
+            <form method="POST" action="search">
+                <input type="text" name="search" id="search" placeholder="Search" />
+            </form>
+            <div class="search-btn">
+                <i class="material-icons search-icon">search</i>
+            </div>
+        </div>
+        <div class="feature-icons">
+            <i class="material-icons">video_call</i>
+            <i class="material-icons">apps</i>
+            <i class="material-icons">message</i>
+            <i class="material-icons">notifications</i>
+            <span class="bell-icon-badge">9+</span>
+            <i class="material-icons account-icon">account_circle</i>
+        </div>
+    </nav>
+
+    <main>
+        <section class="player">
+            <div class="youtube-player">
+                <video src="{{ url_for('static', filename='videos/') }}{{ row[3] }}" alt="image" width="100%" height="600" controls autoplay>
+                </video>
+            </div>
+            <div class="video-info">
+                <h1 class="title">
+                    {{ row[1] }}
+                </h1>
+                <!-- <div class="video-toolbar">
+                    <span class="video-views">
+                        599,043 views
+                    </span>
+                    <span class="right-menu">
+                        <div class="thumb-wrapper">
+                            <a class="thumb-up-btn">
+                                <i class="material-icons">thumb_up</i>
+                                <span class="thumbs-count">26K</span>
+                    </a>
+
+                    <a class="thumb-down-btn">
+                        <i class="material-icons">thumb_down</i>
+                        <span class="thumbs-count">361</span>
+                    </a>
+                </div>
+
+                <a class="share-btn">
+                    <i class="material-icons">reply</i>
+                    <span>SHARE</span>
+                </a>
+
+                <a class="save-btn">
+                    <i class="material-icons">playlist_add</i>
+                    <span>SAVE</span>
+                </a>
+                <a class="options-btn">
+                    <i class="material-icons">more_horiz</i>
+                </a> -->
+                </span>
+            </div>
+            </div>
+
+            <section class="channel-info">
+                <!-- <div class="avatar">
+                    <div></div>
+                </div> -->
+                <div class="description">
+                    <h2>{{ row[4] }}</h2>
+                    <h3>{{ row[5] }}</h3>
+                    <p>{{ row[2] }}</p>
+                    <!-- <p class="show-more">show more</p> -->
+                </div>
+                <div class="subscribe">
+                    <!-- <button> subscribe <span>293K</span></button> -->
+                </div>
+            </section>
+
+
+    </main>
+
+</body>
+{% endfor %}
+
+</html>
