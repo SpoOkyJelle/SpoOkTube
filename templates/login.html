@@ -44,11 +44,25 @@
         </div>
         <div class="feature-icons">
             <i class="material-icons">video_call</i>
-            <i class="material-icons">apps</i>
+            <!-- <i class="material-icons">apps</i>
             <i class="material-icons">message</i>
             <i class="material-icons">notifications</i>
-            <span class="bell-icon-badge">9+</span>
-            <i class="material-icons account-icon">account_circle</i>
+            <span class="bell-icon-badge">9+</span> -->
+            {% if userinf %}
+                {% for inf in userinf %}
+                <div class="dropdown">
+                    <img onclick="channeldropdown()" class="account-icon channel_img" src="{{ inf[4] }}" alt="">
+                    <div id="channeldropdown" class="dropdown-content">
+                        <div class="content">
+                            <a href="{{ url_for('channel', channel='') }}{{ inf[1] }}">{{ inf[1] }}</a>
+                            <a href="logout">Logout</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <button onclick="location.href='login';" type="button" class="btn btn-outline-primary">Login</button>
+            {% endif %}
         </div>
     </nav>
 

@@ -46,35 +46,26 @@
             <!-- <i class="material-icons">apps</i>
             <i class="material-icons">message</i>
             <i class="material-icons">notifications</i>
-            <span class="bell-icon-badge">9+</span>
-            <i class="material-icons account-icon">account_circle</i> -->
+            <span class="bell-icon-badge">9+</span> -->
+            {% if userinf %}
+                {% for inf in userinf %}
+                <div class="dropdown">
+                    <img onclick="channeldropdown()" class="account-icon channel_img" src="{{ inf[4] }}" alt="">
+                    <div id="channeldropdown" class="dropdown-content">
+                        <div class="content">
+                            <a href="{{ url_for('channel', channel='') }}{{ inf[1] }}">{{ inf[1] }}</a>
+                            <a href="logout">Logout</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <button onclick="location.href='login';" type="button" class="btn btn-outline-primary">Login</button>
+            {% endif %}
         </div>
     </nav>
     <!-- Top navbar -->
 
-    <!-- mobile top navbar -->
-    <nav class="container-fluid fixed-top bg-white pt-3" id="top_nav_mobile">
-        <div class="row">
-            <div class="col-3 pl-4">
-                <a class="navbar-brand" href="index.html"><img src="images/logo.jpg" class="mb-2"></a>
-            </div>
-            <div class="col-7">
-                <form>
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control search" placeholder="Search">
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" data-toggle="tooltip" data-placement="bottom"
-                                title="Search!"><i class="fas fa-search"></i></button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="col-2 text-right">
-                <a href="login.html"><i class="fas fa-user-circle" style="font-size: 30px;"></i></a>
-            </div>
-        </div>
-    </nav>
-    <!-- mobile top navbar -->
 
     {% for row in data %}
     <!-- sidebar -->

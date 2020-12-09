@@ -16,12 +16,13 @@ mysql.init_app(app)
 
 
 # [ ] rework css
+#    [ ] login page style
 # [ ] add dark theme
 # [ ] make dark theme toggelable
+# [ ] video upload
 # [x] login
 # [x] login bad password
-# [ ] account view (logout and stuff)
-# [ ] video upload
+# [x] account view (logout and stuff)
 
 
 @app.route("/")
@@ -31,8 +32,17 @@ def home():
 
     cursor.execute("SELECT * FROM `videos` INNER JOIN `channels` ON `videos`.`channel_id` = `channels`.`id`")
     data = cursor.fetchall()
+    
+    
+    userinfo=None
+    if "user" in session:
+        sql = "SELECT * FROM `channels` WHERE `channel_name` = %s"
+        cursor.execute(sql, (session['user'],))
+        userinfo = cursor.fetchall()
+    else:
+        userinfo=None
 
-    return render_template('homepage.html', data=data)
+    return render_template('homepage.html', data=data, userinf=userinfo)
 
 
 @app.route("/channel/<channel>")
@@ -53,7 +63,16 @@ def channel(channel):
     cursor.execute(videoquery, (id,))
 
     videos = cursor.fetchall()
-    return render_template('channel.html', data=data, videos = videos)
+    
+    userinfo=None
+    if "user" in session:
+        sql = "SELECT * FROM `channels` WHERE `channel_name` = %s"
+        cursor.execute(sql, (session['user'],))
+        userinfo = cursor.fetchall()
+    else:
+        userinfo=None
+    
+    return render_template('channel.html', data=data, videos = videos, userinf=userinfo)
 
 
 @app.route("/search", methods = ['POST'])
@@ -68,7 +87,15 @@ def search():
     cursor.execute(sql, (searchString, searchString, searchString,))
 
     data = cursor.fetchall()
-    return render_template('searchpage.html', data=data)
+    
+    userinfo=None
+    if "user" in session:
+        sql = "SELECT * FROM `channels` WHERE `channel_name` = %s"
+        cursor.execute(sql, (session['user'],))
+        userinfo = cursor.fetchall()
+    else:
+        userinfo=None
+    return render_template('searchpage.html', data=data, userinf=userinfo)
 
 
 @app.route("/video/<id>", methods=['GET'])
@@ -93,8 +120,16 @@ def videoPage(id):
     
     viewcount = "UPDATE `videos` SET `video_views` = `video_views` + 1 WHERE `id` = %s"
     cursor.execute(viewcount, (videoid,))
+    
+    userinfo=None
+    if "user" in session:
+        sql = "SELECT * FROM `channels` WHERE `channel_name` = %s"
+        cursor.execute(sql, (session['user'],))
+        userinfo = cursor.fetchall()
+    else:
+        userinfo=None
 
-    return render_template('videopage.html', data=data, channel=channel)
+    return render_template('videopage.html', data=data, channel=channel, userinf=userinfo)
 
 
 @app.route("/login", methods=['GET', 'POST'])
