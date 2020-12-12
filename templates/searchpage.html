@@ -53,7 +53,7 @@
                     <div id="channeldropdown" class="dropdown-content">
                         <div class="content">
                             <a href="{{ url_for('channel', channel='') }}{{ inf[1] }}">{{ inf[1] }}</a>
-                            <a href="logout">Logout</a>
+                            <a href="/logout">Logout</a>
                         </div>
                     </div>
                 </div>
@@ -223,8 +223,14 @@
                                         <div class="col-10">
                                             <p class="mb-1 title">{{ row[2] }}</p>
                                             <p class="subtitle">
-                                                • {{ row[6] }}
+                                               {{ row[4] }} views • {{ row[6] }}
                                             </p>
+                                            <a href="{{ url_for('channel', channel='') }}{{ row[8] }}">
+                                                <div class="profile">
+                                                    <img src="{{ row[11] }}" alt="">
+                                                    {{ row[8] }}
+                                                </div>
+                                            </a>
                                             <div class="short_description">
                                                 {{ row[3] }}
                                             </div>

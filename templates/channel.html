@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 
+{% for row in data %}
 <head>
     <title>Youtube</title>
     <meta charset="utf-8">
@@ -54,7 +55,7 @@
                     <div id="channeldropdown" class="dropdown-content">
                         <div class="content">
                             <a href="{{ url_for('channel', channel='') }}{{ inf[1] }}">{{ inf[1] }}</a>
-                            <a href="logout">Logout</a>
+                            <a href="/logout">Logout</a>
                         </div>
                     </div>
                 </div>
@@ -66,8 +67,6 @@
     </nav>
     <!-- Top navbar -->
 
-
-    {% for row in data %}
     <!-- sidebar -->
     <nav class="main-nav">
         <ul>

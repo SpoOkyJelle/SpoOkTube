@@ -16,10 +16,15 @@ mysql.init_app(app)
 
 
 # [ ] rework css
-#    [ ] login page style
-# [ ] add dark theme
+#   [x] login page style
+#   [ ] add dark theme
+# [ ] comments
+#   [x] view comments
+#   [ ] add comments
+#   [ ] react to comments
 # [ ] make dark theme toggelable
 # [ ] video upload
+# [x] rework sql query's
 # [x] login
 # [x] login bad password
 # [x] account view (logout and stuff)
@@ -79,11 +84,11 @@ def channel(channel):
 def search():
     conn = mysql.connect()
     cursor = conn.cursor()
-    
+
     query = request.form['search']
     searchString = '%' + query + '%'
 
-    sql = "SELECT * FROM `videos` where video_title LIKE %s OR video_desc LIKE %s OR video_url LIKE %s"
+    sql = "SELECT * FROM `videos`  INNER JOIN `channels` ON `videos`.`channel_id` = `channels`.`id` WHERE `video_title` LIKE %s OR `video_desc` LIKE %s OR `video_url` LIKE %s"
     cursor.execute(sql, (searchString, searchString, searchString,))
 
     data = cursor.fetchall()
@@ -103,21 +108,18 @@ def videoPage(id):
     conn = mysql.connect()
     cursor = conn.cursor()
 
-    query = "SELECT * from `videos` WHERE `id` = %s"
-    cursor.execute(query, (id,))
-    
+    sql = "SELECT * FROM `videos` INNER JOIN `channels` ON `videos`.`channel_id` = `channels`.`id` WHERE `videos`.`id` = %s"
+    cursor.execute(sql, (id,))
     data = cursor.fetchall()
     
-    channelid=0
+    videosql = "SELECT * FROM `comments` INNER JOIN `channels` ON `comments`.`channel_id` = `channels`.`id` WHERE `video_id` = %s"
+    cursor.execute(videosql, (id,))
+    comments = cursor.fetchall()
+    
     videoid=0
     for video in data:
-        channelid = video[1]
         videoid=video[0]
         
-    channelquery = "SELECT * from `channels` WHERE `id` = %s"
-    cursor.execute(channelquery, (channelid,))
-    channel = cursor.fetchall()
-    
     viewcount = "UPDATE `videos` SET `video_views` = `video_views` + 1 WHERE `id` = %s"
     cursor.execute(viewcount, (videoid,))
     
@@ -129,7 +131,7 @@ def videoPage(id):
     else:
         userinfo=None
 
-    return render_template('videopage.html', data=data, channel=channel, userinf=userinfo)
+    return render_template('videopage.html', data=data, userinf=userinfo, comments=comments)
 
 
 @app.route("/login", methods=['GET', 'POST'])
@@ -145,13 +147,17 @@ def login():
         channelquery = "SELECT * from `channels` WHERE `channel_name` = %s"
         cursor.execute(channelquery, (channelname,))
         databasepass = cursor.fetchall()
-        
-        if sha256_crypt.verify(channelpass, databasepass[0][2]):
-            session["user"] = channelname
-            return redirect(url_for('channel', channel=channelname))
-        else:
-            flash('wrong password')
+
+        if not databasepass:
+            flash('Wrong username or password')
             return redirect(url_for('login'))
+        else:
+            if sha256_crypt.verify(channelpass, databasepass[0][2]):
+                session["user"] = channelname
+                return redirect(url_for('channel', channel=channelname))
+            else:
+                flash('Wrong username or password')
+                return redirect(url_for('login'))
     else:
         if "user" in session:
             return redirect(url_for('channel', channel=channelname))

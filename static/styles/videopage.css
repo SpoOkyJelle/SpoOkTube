@@ -91,6 +91,15 @@ nav.main-nav li.active>a {
     font-weight: bold;
 }
 
+.container-fluid .card .profile{
+    margin: 0;
+}
+.container-fluid .card .profile img{
+    height: 3em;
+    margin-right: 1em;
+    border-radius: 50%;
+}
+
 .main_container {
     background: #f9f9f9;
     padding-top: 90px;

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 {% for row in data %}
-{% for info in channel %}
 
 <head>
     <meta charset="UTF-8" />
@@ -10,10 +9,14 @@
     <title>
         {{ row[3] }}
     </title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
     <link rel="icon" href="https://s.ytimg.com/yts/img/favicon_32-vflOogEID.png" />
     <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/videopage.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static',filename='styles/style.css') }}" />
 </head>
 
@@ -46,7 +49,7 @@
                     <div id="channeldropdown" class="dropdown-content">
                         <div class="content">
                             <a href="{{ url_for('channel', channel='') }}{{ inf[1] }}">{{ inf[1] }}</a>
-                            <a href="logout">Logout</a>
+                            <a href="/logout">Logout</a>
                         </div>
                     </div>
                 </div>
@@ -102,27 +105,43 @@
 
             <section class="channel-info">
                 <div class="avatar">
-                    <a href="{{ url_for('channel', channel='') }}{{ info[1] }}">
-                        <img src="{{ info[3] }}" alt="">
+                    <a href="{{ url_for('channel', channel='') }}{{ row[1] }}">
+                        <img src="{{ row[11] }}" alt="">
                     </a>
                 </div>
                 <div class="description">
-                    <h2>{{ info[1] }}</h2>
+                    <h2>{{ row[8] }}</h2>
                     <h3></h3>
                     <p>{{ row[3] }}</p>
                     <!-- <p class="show-more">show more</p> -->
                 </div>
                 <div class="subscribe">
-                    <button> subscribe <span>{{ info[2] }}</span></button>
+                    <button> subscribe <span>{{ row[10] }}</span></button>
                 </div>
             </section>
+
+            <div class="row mb-4">
+                    <div class="col-12 m-4" style="color: #303030; font-weight: bold">10,699 Comments</div>
+            {% for comment in comments %}
+                <div class="col-md-1">
+                    <img id="img" width="30" src="{{ comment[9] }}" class="rounded-circle">
+                </div>
+                <div class="col-md-11">
+                    <div class="comment-detail">
+                        <div class="name mr-3">{{ comment[6] }}</div>
+                        <div class="date">{{ comment[4] }}</div>
+                    </div>
+                    <p>{{ comment[3] }}</p>
+                </div>
+               
+            {% endfor %}
+            </div>
         </section>
 
     </main>
 
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
-{% endfor %}
 {% endfor %}
 
 </html>
