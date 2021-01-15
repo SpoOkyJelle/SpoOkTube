@@ -19,17 +19,33 @@ body {
   font-family: "Roboto", sans-serif;
   font-weight: normal;
   line-height: 1.7;
+  background-color: #222831;
+  color: #fff !important;
 }
 
 /**** NABVAR ****/
 
+.card{
+  border: none;
+  background-color: #333c4a;
+  border-radius: 5px;
+}
+.card video{
+  border-radius: 5px 5px 0 0;
+}
+.card a{
+  color: #fff;
+}
+
+button{
+  border: none;
+  background-color: transparent;
+}
+
 /* Nabar Wrapper */
 
 .nav {
-  align-items: center;
-  box-shadow: 0px 10px 24px -12px rgba(242, 241, 239, 0.7);
-  display: flex;
-  justify-content: space-between;
+  background-color: #30475e;
 }
 
 /* END */
@@ -50,16 +66,20 @@ body {
 
 /* END */
 
-/* Search Bar */
+/* Search Bar  */
 
 .searchbar {
   align-items: center;
-  background-color: #f7f7f7;
+  background-color: #f2a365;
   border-radius: 0.3rem;
-  border: 1px solid #ccc;
+  border: 1px solid #232a33;
   display: flex;
   overflow: hidden;
   width: 66rem;
+  color: #fff;
+}
+i.search-icon{
+  color: #fff !important;
 }
 
 .searchbar form {
@@ -67,12 +87,17 @@ body {
 }
 
 .searchbar input {
-  border-right: 1px solid #ccc;
+  background-color: #333c4a;
+  border-right: 1px solid #232a33;
   border: none;
   font-size: 1.5rem;
   outline: none;
   padding: 0.5rem 0.9rem;
   width: 100%;
+  color: #fff !important;
+}
+.searchbar input::placeholder{
+  color: #fff;
 }
 
 .searchbar input::placeholder {
@@ -224,7 +249,6 @@ main {
 }
 
 .video-views {
-  color: #555;
   font-size: 1.7rem;
   font-weight: 200;
 }
@@ -238,7 +262,6 @@ main {
 
 .right-menu .material-icons,
 .right-menu span {
-  color: #888;
   font-size: 2rem;
 }
 
@@ -376,33 +399,27 @@ main {
 
 .description h2,
 .description h3 {
-  color: #333;
   line-height: 1.3;
 }
 
 .description h3 {
-  color: #777;
   font-size: 1.3rem;
   font-weight: 200;
   margin-bottom: 1.7rem;
 }
 
 .description p {
-  color: #333;
   font-size: 1.4rem;
   line-height: 1.6;
 }
 
 .description .show-more {
-  color: #777;
   cursor: pointer;
   margin-top: 0.8rem;
   text-transform: uppercase;
 }
 
-.avatar div {
-  background-color: red;
-  background-image: url("assets/profile.jpg");
+.avatar img{
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

@@ -16,49 +16,42 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 
-    <link rel="stylesheet" href="{{ url_for('static',filename='styles/videopage.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static',filename='styles/style.css') }}" />
 </head>
 
 <body>
-    <nav class="nav">
+    <!-- mobile top navbar -->
+    <nav class="nav d-flex justify-content-around align-items-center">
         <div class="menu">
-            <i class="material-icons">menu</i>
             <a href="/">
                 <img class="youlogo" src="{{ url_for('static',filename='images/youlogo.png') }}" />
             </a>
         </div>
-        <div class="searchbar">
-            <form method="POST" action="search">
-                <input type="text" name="search" id="search" placeholder="Search" />
-            </form>
-            <div class="search-btn">
+        <form class="searchbar" method="POST" action="search">
+            <input type="text" name="search" id="search" placeholder="Search" />
+            <button class="search-btn">
                 <i class="material-icons search-icon">search</i>
-            </div>
-        </div>
-        <div class="feature-icons">
-            <i class="material-icons">video_call</i>
-            <!-- <i class="material-icons">apps</i>
-            <i class="material-icons">message</i>
-            <i class="material-icons">notifications</i>
-            <span class="bell-icon-badge">9+</span> -->
-            {% if userinf %}
-                {% for inf in userinf %}
-                <div class="dropdown">
-                    <img onclick="channeldropdown()" class="account-icon channel_img" src="{{ inf[4] }}" alt="">
-                    <div id="channeldropdown" class="dropdown-content">
-                        <div class="content">
-                            <a href="{{ url_for('channel', channel='') }}{{ inf[1] }}">{{ inf[1] }}</a>
-                            <a href="/logout">Logout</a>
-                        </div>
+            </button>
+        </form>
+            
+        {% if userinf %}
+            {% for inf in userinf %}
+            <div class="dropdown">
+                <img onclick="channeldropdown()" class="account-icon channel_img" src="{{ inf[4] }}" alt="">
+                <div id="channeldropdown" class="dropdown-content">
+                    <div class="content">
+                        <a href="{{ url_for('channel', channel='') }}{{ inf[1] }}">{{ inf[1] }}</a>
+                        <a href="/logout">Logout</a>
                     </div>
                 </div>
-                {% endfor %}
-            {% else %}
-                <button onclick="location.href='login';" type="button" class="btn btn-outline-primary">Login</button>
-            {% endif %}
-        </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <button onclick="location.href='login';" type="button" class="btn btn-outline-primary">Login</button>
+        {% endif %}
     </nav>
+    <!-- mobile top navbar -->
+
     <main>
         <section class="player">
             <div class="youtube-player">
@@ -116,14 +109,14 @@
                     <!-- <p class="show-more">show more</p> -->
                 </div>
                 <div class="subscribe">
-                    <button> subscribe <span>{{ row[10] }}</span></button>
+                    <button> SUBSCRIBE <span>{{ row[10] }}</span></button>
                 </div>
             </section>
 
             <div class="row mb-4">
-                    <div class="col-12 m-4" style="color: #303030; font-weight: bold">10,699 Comments</div>
+                    <!-- <div class="col-12 m-4">10,699 Comments</div> -->
             {% for comment in comments %}
-                <div class="col-md-1">
+                <div class="col-md-1 avatar">
                     <img id="img" width="30" src="{{ comment[9] }}" class="rounded-circle">
                 </div>
                 <div class="col-md-11">
@@ -140,7 +133,6 @@
 
     </main>
 
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 {% endfor %}
 
