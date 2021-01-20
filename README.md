@@ -60,6 +60,19 @@ if __name__ == "__main__":
   app.run(host='0.0.0.0')
 ```
 
+
+Be sure to change to the correct database. (SQL file included in repo).
+Change the user, password and host. The database name should be the same as listed below.
+```bash
+mysql = MySQL()
+app.config['MYSQL_DATABASE_USER'] = 'root'
+app.config['MYSQL_DATABASE_PASSWORD'] = ''
+app.config['MYSQL_DATABASE_DB'] = 'python_youtubeclone'
+app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+mysql.init_app(app)
+```
+
+
 Then we will allow the port 5000 and run the app.
 
 ```bash
